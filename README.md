@@ -1,2 +1,0 @@
-# VueTypescriptSample
-Created with CodeSandbox
