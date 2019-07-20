@@ -3,20 +3,18 @@
     <label :for="id" v-if=" text !== '' ">{{ text }}</label>
     <select :id="id">
       <option
-        v-for="item in myoptions.data"
-        :key="item.id"
-        :value="item.id"
-        :selected="item.id === selectedValue.id"
-      >{{ item.name }}</option>
+        v-for="myoption in myoptions"
+        :key="myoption.id"
+        :value="myoption.id"
+        :selected="myoption.id === selectedValue.id"
+      >{{ myoption.name }}</option>
     </select>
   </p>
 </template>
 
-
 <script lang='ts'>
 import { Vue } from "vue-property-decorator";
-//type: Array as () => MyOptionsInterface[],
-import MyOptionList from "./../types/MyOption/MyOptionList";
+import MyOptionInterface from "./../models/MyOption/MyOptionInterface";
 
 export default Vue.extend({
   props: {
@@ -28,8 +26,7 @@ export default Vue.extend({
       required: true
     },
     myoptions: {
-      //type: Array as () => MyOptionsInterface[],
-      type: MyOptionList,
+      type: Array as () => MyOptionInterface[],
       required: true
     },
     selectedValue: {

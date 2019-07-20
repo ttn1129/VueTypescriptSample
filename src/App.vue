@@ -3,12 +3,12 @@
     <h2>アンケート</h2>
     <p>アンケートにご協力ください</p>
     <form v-on:submit.prevent>
-      <MyOptionDOM
+      <MyOption
         text="あなたの住んでいる都道府県は？"
         id="prefecture"
         :myoptions="prefectures"
         :selectedValue="{id:1}"
-      ></MyOptionDOM>
+      ></MyOption>
       <button @click="gatherResult">send</button>
     </form>
     <div v-if=" this.result.length !== 0 ">{{ result }}</div>
@@ -16,33 +16,55 @@
 </template>
 
 <script lang='ts'>
-import MyOptionDOM from "./components/MyOptionDOM.vue";
-import Prefecture from "./types/MyOption/Prefecture";
-// import MyOption from "./types/MyOption/MyOption";
-import MyOptionList from "./types/MyOption/MyOptionList";
+
+import MyOption from "./components/MyOption.vue";
+import Prefecture from "./models/MyOption/Prefecture";
 import { Vue } from "vue-property-decorator";
-//type: Array as () => MyOptionsInterface[],
+
+function getPrefectures():Prefecture[]{
+  return [{
+      "id": 1,
+      "name": "東京都"
+    }, {
+      "id": 2,
+      "name": "それ以外"
+    }];
+};
+
 
 export default Vue.extend({
   name: "App",
-  data: () => {
+  data():{
+    result:Array<any>
+    prefectures:Prefecture[]
+  }
+  {
     return {
       result: [],
-      prefectures: new MyOptionList([
-        new Prefecture(1, "東京"),
-        new Prefecture(2, "それ以外")
-        // { id: 2, name: "それ以外" } as Prefeture
-      ])
+      prefectures : []
     };
   },
+  created(){
+    this.prefectures = getPrefectures();
+  },
   methods: {
-    gatherResult() {
-      this.result = ["a"];
-      // this.result.push(document.getElementById("prefecture").value) as string);
+    gatherResult():void {
+      this.result = [];
+      this.result.push(
+        (<HTMLInputElement>document.getElementById('prefecture')).value
+      );
+      // const genderCheckedNode = (<HTMLInputElement>document.querySelector(
+      //   "input[name = gender]:checked"
+      // ));
+      // if (genderCheckedNode) {
+      //   this.result.push({
+      //     gender: genderCheckedNode.value
+      //   });
+      // }
     }
   },
   components: {
-    MyOptionDOM
+    MyOption
   }
 });
 </script>
