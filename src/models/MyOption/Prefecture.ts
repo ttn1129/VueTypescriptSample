@@ -1,5 +1,5 @@
-import MyOption from "./MyOptionInterface";
-export default class Prefecture implements MyOption {
+import MyOptionInterface from "./MyOptionInterface";
+export default class Prefecture implements MyOptionInterface {
   id: number;
   name: string;
   constructor(p__id: number, p__name: string) {
